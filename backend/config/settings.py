@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts.apps.AccountsConfig",
+    "posts.apps.PostsConfig",
     "rest_framework",
     "phonenumber_field",
     "drf_standardized_errors",
@@ -138,9 +139,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "amirhoseinp90@gmail.com"
-EMAIL_HOST_PASSWORD = "lxqy rigx yxzv lsod"
-DEFAULT_FROM_EMAIL = "amirhoseinp90@gmail.com"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_OTP_REGISTER_TEMPLATE = "emails/email_otp_register.html"
 EMAIL_OTP_LOGIN_TEMPLATE = "emails/email_otp_login.html"
