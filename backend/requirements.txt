@@ -1,0 +1,11 @@
+Django==5.2.8
+django-cors-headers==4.9.0
+django-phonenumber-field==8.3.0
+djangorestframework==3.16.1
+djangorestframework-simplejwt
+drf-standardized-errors==0.15.0
+freezegun==1.5.5
+phonenumberslite==9.0.18
+Pillow==12.0.0
+PyJWT==2.10.1
+python-dateutil==2.9.0.post0
