@@ -51,7 +51,7 @@ createRoot(document.getElementById("root")).render(
           <ThemeProvider>
             <BrowserRouter>
               <Routes>
-                <Route path="/" elementelement={<HomeLayout />}>
+                <Route path="/" element={<HomeLayout />}>
                   <Route index element={<HomePage />} />
                   <Route path="/:username" element={<UserProfilePage />} />
 
