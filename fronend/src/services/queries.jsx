@@ -27,3 +27,14 @@ export function useUserProfileQuery({ username, enabled = true }) {
     enabled
   });
 }
+
+
+export function useMePostsQuery(){
+  return useQuery({
+      queryKey: ['me', 'posts'],
+      queryFn: async () => {
+        const res = await api.get(`/me/posts/`)
+        return res.data
+      }
+  })
+}
