@@ -55,10 +55,14 @@ export function ThemeProvider({ children }) {
     components: {
       MuiCssBaseline: {
         styleOverrides: `
-        .size-full{
-          width: 100%;
-          height: 100%;
-      }`,
+          .size-full{
+            width: 100%;
+            height: 100%;
+          }
+          ul{
+            padding:0!important;  
+          }    
+       `,
       },
     },
   });
