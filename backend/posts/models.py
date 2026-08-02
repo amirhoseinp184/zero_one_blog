@@ -38,7 +38,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
 
-        if self.slug:
+        if not self.slug:
             self.slug = slugify(self.title) + "-" + get_random_string(length=6)
 
         if self.content:
