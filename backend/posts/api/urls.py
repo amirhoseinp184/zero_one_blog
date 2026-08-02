@@ -5,5 +5,5 @@ from . import views
 
 app_name = "api"
 urlpatterns = [
-    path("me/", views.PostListCreateAPIView.as_view(), name="post-list-create"),
+    path("me/posts/", views.PostListCreateAPIView.as_view(), name="post-list-create"),
 ]
