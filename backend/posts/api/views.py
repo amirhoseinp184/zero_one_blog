@@ -19,4 +19,16 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    
+
+class PublicPostRetriveView(generics.RetrieveAPIView):
+    queryset = PostsModels.Post.objects.filter(status=PostsModels.Post.Status.PUBLISHED)
+    serializer_class = serializers.PublicPostRetrieveSerializer
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        username = self.kwargs['username']
+        queryset = super().get_queryset()
+        queryset = queryset.filter(author__username=username)
+
+        return queryset
+

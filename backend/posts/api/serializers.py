@@ -10,5 +10,11 @@ class PostListCreateSerializer(serializers.ModelSerializer):
         fields = ("status", "title","slug", "content", "reading_time_minutes", "published_at", "updated_at")
         read_only_fields = ('slug',)
 
-    
-        
+
+
+class PublicPostRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = postModels.Post
+        fields = ('title', 'content', 'reading_time_minutes', 'updated_at')
+
