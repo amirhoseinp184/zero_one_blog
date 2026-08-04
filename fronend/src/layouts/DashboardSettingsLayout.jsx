@@ -20,8 +20,8 @@ export default function DashboardSettingsLayout() {
         >
         <Tab component={Link} value="/dashboard/settings/profile/" to="/dashboard/settings/profile/" disableRipple label="درباره شما" />
         <Tab component={Link} value="/dashboard/settings/account/" to="/dashboard/settings/account/" disableRipple label="حساب کاربری" />
-        <Tab component={Link} disableRipple label="اطلاعیه ها" />
-        <Tab component={Link} disableRipple label="تنظیمات پیشرفته" />
+        <Tab component={Link} disabled sx={theme => ({'&.Mui-disabled': {color:theme.palette.grey[700]}})} disableRipple label="اطلاعیه ها" />
+        <Tab component={Link} disabled sx={theme => ({'&.Mui-disabled': {color:theme.palette.grey[700]}})} disableRipple label="تنظیمات پیشرفته" />
         </Tabs>
         <Box sx={{my:4}}>
           <Outlet/>
