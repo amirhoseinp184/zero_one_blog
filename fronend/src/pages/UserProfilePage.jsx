@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import NotFoundPage from "./404NotFound";
+import NotFoundPage from "./NotFoundPage";
 import { useUserProfileQuery, useUserQuery } from "../services/queries";
 import { Avatar, Box, Typography, Button } from "@mui/material";
 import { grey } from "@mui/material/colors";

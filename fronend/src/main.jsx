@@ -22,7 +22,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
-import NotFoundPage from "./pages/404NotFound.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 // dashboard pages
 
