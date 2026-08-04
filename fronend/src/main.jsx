@@ -60,7 +60,7 @@ createRoot(document.getElementById("root")).render(
                       path="settings/"
                       element={<DashboardSettingsLayout />}
                     >
-                      <Route index element={<UserSettingsPage />} />
+                      <Route path="profile/" element={<UserSettingsPage />} />
                       <Route
                         path="account/"
                         element={<AccountSettingsPage />}

@@ -64,7 +64,7 @@ export default function DashboardMenu() {
       <DashboardMenuItem
         primary="حساب کاربری"
         icon={<Settings />}
-        to="/dashboard/settings/"
+        to="/dashboard/settings/profile/"
       />
       <DashboardMenuItem
         primary="پست ها"

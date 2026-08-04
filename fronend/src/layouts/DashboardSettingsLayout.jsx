@@ -18,7 +18,7 @@ export default function DashboardSettingsLayout() {
         value={value}
         onChange={handleTabChagne}
         >
-        <Tab component={Link} value="/dashboard/settings/" to="/dashboard/settings/" disableRipple label="درباره شما" />
+        <Tab component={Link} value="/dashboard/settings/profile/" to="/dashboard/settings/profile/" disableRipple label="درباره شما" />
         <Tab component={Link} value="/dashboard/settings/account/" to="/dashboard/settings/account/" disableRipple label="حساب کاربری" />
         <Tab component={Link} disableRipple label="اطلاعیه ها" />
         <Tab component={Link} disableRipple label="تنظیمات پیشرفته" />
