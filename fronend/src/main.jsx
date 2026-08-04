@@ -27,7 +27,7 @@ import NotFoundPage from "./pages/404NotFound.jsx";
 // dashboard pages
 
 //settings pages
-import UserSettingsPage from "./pages/dashboard/settings/UserSettingsPage.jsx";
+import ProfileSettingsPage from "./pages/dashboard/settings/ProfileSettingsPage.jsx";
 import AccountSettingsPage from "./pages/dashboard/settings/AccountSettingsPage";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -60,7 +60,7 @@ createRoot(document.getElementById("root")).render(
                       path="settings/"
                       element={<DashboardSettingsLayout />}
                     >
-                      <Route path="profile/" element={<UserSettingsPage />} />
+                      <Route path="profile/" element={<ProfileSettingsPage />} />
                       <Route
                         path="account/"
                         element={<AccountSettingsPage />}

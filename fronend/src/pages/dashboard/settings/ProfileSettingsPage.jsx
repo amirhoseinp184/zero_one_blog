@@ -1,6 +1,6 @@
 import { Stack, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { useUserQuery } from "./../../../services/queries";
+import { useUserQuery } from "../../../services/queries";
 import RHFTextField from "../../../components/RHFTextField";
 
 import EditableField from "../../../components/dashboard/EditableField";
