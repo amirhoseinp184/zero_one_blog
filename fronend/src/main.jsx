@@ -20,7 +20,6 @@ import DashboardSettingsLayout from "./layouts/DashboardSettingsLayout.jsx";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
