@@ -113,7 +113,7 @@ export default function UserProfileMenu({ user }) {
           sx={{ py: 1.5, transition: "background .3s", color: grey[300] }}
           disableRipple={true}
           onClick={handleClose}
-          to="/dashboard/settings"
+          to="/dashboard/settings/profile/"
           component={Link}
         >
             <ListItemIcon>
