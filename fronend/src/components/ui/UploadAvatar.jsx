@@ -12,7 +12,7 @@ import {
 import { visuallyHidden } from "@mui/utils";
 import { useState } from "react";
 import { useUpdateSettingsMutations } from "../../services/mutations";
-import { dataURLtoBlob } from "../../utils/utils";
+import { dataURLtoBlob } from "../../utils/helper";
 
 import ImageCropperModal from "../ImageCropperModel";
 
