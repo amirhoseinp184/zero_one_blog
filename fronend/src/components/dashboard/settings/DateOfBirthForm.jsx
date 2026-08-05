@@ -1,6 +1,6 @@
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState } from "react";
-import { useUpdateSettingsMutations } from "../../services/mutations";
+import { useUpdateSettingsMutations } from "../../../services/mutations";
 
 export default function DateOfBirthForm({ defaultDate }) {
   const [value, setValue] = useState(() => {

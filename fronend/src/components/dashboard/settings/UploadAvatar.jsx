@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useState } from "react";
-import { useUpdateSettingsMutations } from "../../services/mutations";
-import { dataURLtoBlob } from "../../utils/helper";
+import { useUpdateSettingsMutations } from "../../../services/mutations";
+import { dataURLtoBlob } from "../../../utils/helper";
 
-import ImageCropperModal from "../ImageCropperModel";
+import ImageCropperModal from "../../ui/ImageCropperModal";
+
 
 const defaultRootSx = {
   "&.MuiBadge-root": { borderRadius: "60px", width: "fit-content" },

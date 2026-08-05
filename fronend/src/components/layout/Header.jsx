@@ -17,10 +17,10 @@ import ZeroOne from "/src/assets/images//zero_one.png";
 import { grey } from "@mui/material/colors";
 import { Link } from "react-router";
 
-import UserProfileMenu from "./UserProfileMenu";
+import UserProfileMenu from "../dashboard/user/UserProfileMenu";
 
-import { useAuth } from "../providers/AuthProvider";
-import { useUserQuery } from "../services/queries";
+import { useAuth } from "../../providers/AuthProvider";
+import { useUserQuery } from "../../services/queries";
 
 
 function AuthButtons() {

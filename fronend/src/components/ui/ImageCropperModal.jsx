@@ -12,7 +12,7 @@ import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
-import { setCanvasPreview } from "../utils/setCanvasPreview";
+import { setCanvasPreview } from "../../utils/setCanvasPreview";
 
 
 const MIN_DIMENTION = 150;

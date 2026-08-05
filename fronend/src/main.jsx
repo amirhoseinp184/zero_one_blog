@@ -18,8 +18,8 @@ import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import DashboardSettingsLayout from "./layouts/DashboardSettingsLayout.jsx";
 
 import HomePage from "./pages/HomePage";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/auth/RegisterPage.jsx";
+import LoginPage from "./pages/auth/LoginPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
@@ -37,8 +37,8 @@ const queryClient = new QueryClient({
 });
 
 //posts pages
-import DashboardPostsPage from "./pages/dashboard/posts/DashboardPostsPage.jsx";
-import DashboardCreatePostPage from "./pages/dashboard/posts/DashboardCreatePostPage.jsx";
+import DashboardPostListPage from "./pages/dashboard/posts/PostListPage.jsx";
+import DashboardCreatePostPage from "./pages/dashboard/posts/CreatePostPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
@@ -68,7 +68,7 @@ createRoot(document.getElementById("root")).render(
                       {/* <Route index element={<UserSettingsPage />} /> */}
                     </Route>
                     <Route path="posts/">
-                      <Route index element={<DashboardPostsPage />} />
+                      <Route index element={<DashboardPostListPage />} />
                       <Route
                         path="create"
                         element={<DashboardCreatePostPage />}

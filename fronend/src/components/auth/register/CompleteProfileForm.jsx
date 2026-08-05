@@ -1,6 +1,6 @@
 import { useAlert } from "../../../providers/AlertProvider";
 import { Box, TextField, Button } from "@mui/material";
-import UploadAvatar from "../../ui/UploadAvatar";
+import UploadAvatar from "../../dashboard/settings/UploadAvatar";
 import { useNavigate } from "react-router";
 
 import { useForm, Controller } from "react-hook-form";

@@ -11,8 +11,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { useCreatePostMutations } from "../../services/mutations";
-import { useAlert } from "../../providers/AlertProvider";
+import { useCreatePostMutations } from "../../../services/mutations";
+import { useAlert } from "../../../providers/AlertProvider";
 
 export default function CreatePostForm() {
   const rteRef = useRef(null);

@@ -1,4 +1,4 @@
-import RHFTextField from "../RHFTextField";
+import RHFTextField from "../../ui/RHFTextField";
 import { grey } from "@mui/material/colors";
 
 export default function DashboardTextField({ name, label, ...props }) {

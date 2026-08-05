@@ -1,7 +1,7 @@
 import { Stack, Button, Typography, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import EditableField from "../../../components/dashboard/EditableField";
-import DashboardTextField from "../../../components/dashboard/DashboardTextField";
+import EditableField from "../../../components/dashboard/settings/EditableField";
+import DashboardTextField from "../../../components/dashboard/settings/DashboardTextField";
 import { useUserQuery } from "../../../services/queries";
 
 export default function AccountSettingsPage() {

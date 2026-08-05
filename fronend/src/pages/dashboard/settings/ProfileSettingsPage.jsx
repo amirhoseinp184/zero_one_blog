@@ -1,15 +1,15 @@
 import { Stack, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useUserQuery } from "../../../services/queries";
-import RHFTextField from "../../../components/RHFTextField";
+import RHFTextField from "../../../components/ui/RHFTextField";
 
-import EditableField from "../../../components/dashboard/EditableField";
+import EditableField from "../../../components/dashboard/settings/EditableField";
 import { grey } from "@mui/material/colors";
-import SettingPlaceHolder from "../../../components/dashboard/SettingPlaceholder";
-import UploadAvatar from "../../../components/ui/UploadAvatar";
-import SelectGenderForm from "../../../components/dashboard/SelectGenderForm";
-import DateOfBirthForm from "../../../components/dashboard/DateOfBirthForm";
-import DashboardTextField from "../../../components/dashboard/DashboardTextField";
+import SettingPlaceHolder from "../../../components/dashboard/settings/SettingPlaceholder";
+import UploadAvatar from "../../../components/dashboard/settings/UploadAvatar";
+import SelectGenderForm from "../../../components/dashboard/settings/SelectGenderForm";
+import DateOfBirthForm from "../../../components/dashboard/settings/DateOfBirthForm";
+import DashboardTextField from "../../../components/dashboard/settings/DashboardTextField";
 
 
 export default function UserSettingsPage() {

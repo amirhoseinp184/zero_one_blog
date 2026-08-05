@@ -1,7 +1,7 @@
 import { Typography, Box, Stack, Button } from "@mui/material";
 import { NavLink } from "react-router";
 import { useMePostsQuery } from "../../../services/queries";
-import Post from "../../../components/dashboard/Post";
+import PostCard from "../../../components/dashboard/posts/PostCard";
 
 export default function DashboardPostsPage() {
   const { data, isLoading } = useMePostsQuery();
@@ -45,7 +45,7 @@ export default function DashboardPostsPage() {
         ))} */}
         {data?.map((post, index) => {
           const { status, title, published_at } = post
-          return <Post key={index} title={title} status={status} published_at={published_at} />;
+          return <PostCard key={index} title={title} status={status} published_at={published_at} />;
         })}
       </Stack>
     </Box>

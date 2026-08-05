@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { Box } from "@mui/material";
-import DashboardMenu from "../components/DashboardMenu";
+import DashboardMenu from "../components/layout/DashboardMenu";
 import { grey } from "@mui/material/colors";
 
 export default function DashboardLayout() {

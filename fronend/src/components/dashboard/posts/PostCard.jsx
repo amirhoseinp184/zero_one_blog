@@ -1,5 +1,5 @@
 import { Box, Typography, Chip } from "@mui/material";
-import { formatDate } from "../../utils/helper";
+import { formatDate } from "../../../utils/helper";
 
 export default function Post(props) {
   const { Component = "div", title, status, published_at } = props

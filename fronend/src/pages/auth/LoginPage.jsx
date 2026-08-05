@@ -2,12 +2,12 @@ import WhiteBgLogo from "/src/assets/images/zero_one_white_background.png";
 
 import { Container, Box, Typography, Button } from "@mui/material";
 
-import { useMultiStep } from "../providers/MultiStepProvider";
+import { useMultiStep } from "../../providers/MultiStepProvider";
 
-import CheckUserForm from "../components/auth/login/CheckUserForm";
-import PasswordLoginForm from '../components/auth/login/PasswordLoginForm'
-import CodeLoginForm from "../components/auth/login/CodeLoginForm";
-import OtherLoginOptions from "../components/auth/login/OtherLoginOptions";
+import CheckUserForm from "../../components/auth/login/CheckUserForm";
+import PasswordLoginForm from '../../components/auth/login/PasswordLoginForm'
+import CodeLoginForm from "../../components/auth/login/CodeLoginForm";
+import OtherLoginOptions from "../../components/auth/login/OtherLoginOptions";
 // import VerifyCodeForm from "../components/auth/register/VerifyCodeForm";
 // import CompleteProfileForm from "../components/auth/register/CompleteProfileForm";
 

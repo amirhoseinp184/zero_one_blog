@@ -5,8 +5,8 @@ import {
   Radio,
 } from "@mui/material";
 import { useState } from "react";
-import { useUpdateSettingsMutations } from "../../services/mutations";
-import { useAlert } from "../../providers/AlertProvider";
+import { useUpdateSettingsMutations } from "../../../services/mutations";
+import { useAlert } from "../../../providers/AlertProvider";
 
 export default function SelectGenderForm({ defaultGender = "" }) {
   const [value, setValue] = useState(defaultGender);

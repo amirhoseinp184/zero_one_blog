@@ -2,11 +2,11 @@ import WhiteBgLogo from "/src/assets/images/zero_one_white_background.png";
 
 import { Container, Box, Typography, Button } from "@mui/material";
 
-import { useMultiStep } from "../providers/MultiStepProvider";
+import { useMultiStep } from "../../providers/MultiStepProvider";
 
-import CheckUserForm from "../components/auth/register/CheckUserForm";
-import VerifyCodeForm from "../components/auth/register/VerifyCodeForm";
-import CompleteProfileForm from "../components/auth/register/CompleteProfileForm";
+import CheckUserForm from "../../components/auth/register/CheckUserForm";
+import VerifyCodeForm from "../../components/auth/register/VerifyCodeForm";
+import CompleteProfileForm from "../../components/auth/register/CompleteProfileForm";
 
 export default function RegisterPage() {
   const { step } = useMultiStep();

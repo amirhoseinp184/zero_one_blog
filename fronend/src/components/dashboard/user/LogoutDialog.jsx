@@ -7,9 +7,9 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useAuth } from './../providers/AuthProvider'
-import { useAlert } from "../providers/AlertProvider";
-import { api } from "../services/api";
+import { useAuth } from '../../../providers/AuthProvider'
+import { useAlert } from "../../../providers/AlertProvider";
+import { api } from "../../../services/api";
 
 export default function LogoutDialog({ open, onClose }) {
   const { logout } = useAuth()

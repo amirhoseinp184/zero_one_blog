@@ -3,7 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { NavLink } from "react-router";
 
-import CreatePostForm from "../../../components/dashboard/CreatePostForm";
+import CreatePostForm from "../../../components/dashboard/posts/CreatePostForm";
 
 
 

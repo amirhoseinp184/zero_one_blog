@@ -5,13 +5,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { handleRequestError } from "../../utils/handleRequestError";
+import { handleRequestError } from "../../../utils/handleRequestError";
 
-import RHFTextField from "../RHFTextField";
-import { useAlert } from "../../providers/AlertProvider";
-import { api } from "../../services/api";
+import RHFTextField from "../../ui/RHFTextField";
+import { useAlert } from "../../../providers/AlertProvider";
+import { api } from "../../../services/api";
 
-import FormDialog from "./FormDialog";
+import FormDialog from "../../ui/FormDialog";
 import SettingPlaceHolder from "./SettingPlaceholder";
 
 export default function EditableField({
