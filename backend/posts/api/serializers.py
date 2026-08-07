@@ -16,5 +16,5 @@ class PublicPostRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = postModels.Post
-        fields = ('title', 'content', 'reading_time_minutes', 'updated_at')
+        fields = ('title', 'content', 'status', 'reading_time_minutes', 'updated_at')
 
