@@ -2,10 +2,10 @@ import { Box, Typography, Chip } from "@mui/material";
 import { formatDate } from "../../../utils/helper";
 
 export default function Post(props) {
-  const { Component = "div", title, status, published_at } = props
-    
+  const { Component = "div", title, status, published_at, ...rest } = props
+
   return (
-    <Component>
+    <Component {...rest}>
       <Box
         sx={(theme) => ({
           border: `1px solid ${theme.palette.grey[700]}`,
