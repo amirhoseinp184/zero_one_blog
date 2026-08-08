@@ -41,8 +41,17 @@ export default function DashboardPostsPage() {
       <Stack sx={{ ml: 2, gap: 2 }} component={"ul"}>
         {isLoading && <p>is Loading...</p>}
         {data?.map((post, index) => {
-          const { status, title, published_at } = post
-          return <PostCard key={index} title={title} status={status} published_at={published_at} />;
+          const { status, title, published_at, excerpt } = post;
+          
+          return (
+            <PostCard
+              key={index}
+              title={title}
+              status={status}
+              published_at={published_at}
+              excerpt={excerpt}
+            />
+          );
         })}
       </Stack>
     </Box>
