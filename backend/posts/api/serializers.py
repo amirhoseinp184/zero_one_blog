@@ -14,7 +14,7 @@ class PostListSerializer(serializers.ModelSerializer):
     excerpt = serializers.SerializerMethodField()
     class Meta:
         model = postModels.Post
-        fields = ("status", "title","slug", "content", "reading_time_minutes", "published_at", "updated_at", 'excerpt')
+        fields = ("status", "title","slug", "reading_time_minutes", "published_at", "updated_at", 'excerpt')
         read_only_fields = ('slug',)
 
     def get_excerpt(self, obj):
