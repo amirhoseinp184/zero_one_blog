@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.utils.html import strip_tags
+from django.utils.text import Truncator
 
 from rest_framework import serializers
 
@@ -9,11 +11,16 @@ User = get_user_model()
 
 
 class PostListCreateSerializer(serializers.ModelSerializer):
+    excerpt = serializers.SerializerMethodField()
 
     class Meta:
         model = postModels.Post
-        fields = ("status", "title","slug", "content", "reading_time_minutes", "published_at", "updated_at")
+        fields = ("status", "title","slug", "content", "reading_time_minutes", "published_at", "updated_at", 'excerpt')
         read_only_fields = ('slug',)
+
+    def get_excerpt(self, obj):
+        content = strip_tags(obj.content)
+        return Truncator(content).chars(140)
 
 
 class AuthorPreviewSerializer(serializers.ModelSerializer):
@@ -27,6 +34,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = postModels.Post
         fields = ("author" ,"status", "title", "content")
+        extra_kwargs = {'content': {'min_length': 300}}
 
 
 class PublicPostRetrieveSerializer(serializers.ModelSerializer):
