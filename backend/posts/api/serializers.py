@@ -10,9 +10,8 @@ from posts import models as postModels
 User = get_user_model()
 
 
-class PostListCreateSerializer(serializers.ModelSerializer):
+class PostListSerializer(serializers.ModelSerializer):
     excerpt = serializers.SerializerMethodField()
-
     class Meta:
         model = postModels.Post
         fields = ("status", "title","slug", "content", "reading_time_minutes", "published_at", "updated_at", 'excerpt')

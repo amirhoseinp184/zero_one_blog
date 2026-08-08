@@ -7,7 +7,7 @@ from posts import models as PostsModels
 
 class PostListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = serializers.PostListCreateSerializer
+    serializer_class = serializers.PostListSerializer
     queryset = PostsModels.Post.objects.all()
 
     def get_queryset(self):
