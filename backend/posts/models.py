@@ -39,7 +39,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.slug:
-            self.slug = slugify(self.title) + "-" + get_random_string(length=6)
+            self.slug = slugify(self.title, allow_unicode=True) + "-" + get_random_string(length=6)
 
         if self.content:
             plain_text = strip_tags(self.content)
