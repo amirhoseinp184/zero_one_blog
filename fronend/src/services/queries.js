@@ -38,3 +38,13 @@ export function useMePostsQuery(){
       }
   })
 }
+
+export function useMePostDetailQuery({slug}){
+  return useQuery({
+    queryKey: ['me', 'posts', slug],
+    queryFn: async () => {
+      const res = await api.get(`/me/posts/${slug}`)
+      return res.data
+    }
+  })
+}

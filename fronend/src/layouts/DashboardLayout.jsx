@@ -27,7 +27,7 @@ export default function DashboardLayout() {
         <DashboardMenu />
       </Box>
 
-      <Box sx={{ flex: 1, height: "100vh" }}>
+      <Box sx={{ flex: 1, height: "100%" }}>
         <Outlet />
       </Box>
     </Box>

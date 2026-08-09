@@ -1,11 +1,13 @@
 import { Typography, Box, Stack, Button } from "@mui/material";
-import { NavLink } from "react-router";
+import { NavLink, Link, useLocation } from "react-router";
 import { useMePostsQuery } from "../../../services/queries";
 import PostCard from "../../../components/dashboard/posts/PostCard";
 
 export default function DashboardPostsPage() {
   const { data, isLoading } = useMePostsQuery();
-
+  const location = useLocation()
+  const currentUrl = `${location.pathname}${location.search}`
+  
   return (
     <Box sx={{ p: 5 }}>
       <Box
@@ -41,11 +43,16 @@ export default function DashboardPostsPage() {
       <Stack sx={{ ml: 2, gap: 2 }} component={"ul"}>
         {isLoading && <p>is Loading...</p>}
         {data?.map((post, index) => {
-          const { status, title, published_at, excerpt } = post;
+          const { status, title, published_at, excerpt, slug } = post;
           
           return (
             <PostCard
-              key={index}
+              Component={Link}
+              to={`/dashboard/posts/${slug}`}
+              state={{ from: currentUrl }}
+              style={{textDecoration:'none', color:'inherit'}}
+
+              key={slug}
               title={title}
               status={status}
               published_at={published_at}
