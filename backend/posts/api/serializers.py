@@ -14,8 +14,11 @@ class PostListSerializer(serializers.ModelSerializer):
     excerpt = serializers.SerializerMethodField()
     class Meta:
         model = postModels.Post
-        fields = ("status", "title","slug", "reading_time_minutes", "published_at", "updated_at", 'excerpt')
+        fields = ("status", "title", "slug", "published_at", 'excerpt', 'content')
         read_only_fields = ('slug',)
+        extra_kwargs = {
+            'content': {'write_only': True}
+        }
 
     def get_excerpt(self, obj):
         content = strip_tags(obj.content)
