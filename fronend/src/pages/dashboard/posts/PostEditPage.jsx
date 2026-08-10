@@ -1,53 +1,47 @@
-import { useParams, useLocation, useNavigate, Link } from "react-router";
+import { useParams, useLocation, useNavigate } from "react-router";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useMePostDetailQuery } from "../../../services/queries";
-import { Typography, Box, IconButton, Button } from "@mui/material";
 
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 
-import PostDetail from "../../../components/dashboard/posts/PostDetail";
+import PostEditForm from "../../../components/dashboard/posts/PostEditForm";
 
-export default function PostDetailPage() {
+export default function PostEditPage() {
   const { postSlug } = useParams();
-  const { isPending, error, data } = useMePostDetailQuery({ slug: postSlug });
   const navigate = useNavigate();
   const location = useLocation();
-  const currentUrl = `${location.pathname}${location.search}`
-
-
-  const handleBack = () => {
-    const canGoBack = location.state?.from;
-    if (canGoBack) navigate(-1);
-    else navigate("/dashboard/posts");
-  };
+  const { data, isPending, error } = useMePostDetailQuery({ slug: postSlug });
 
   const isCenteredState = isPending || error;
+
+  const handleClick = () => {
+    const canGoBack = location.state?.from;
+    if (canGoBack) navigate(-1);
+    else navigate(`/dashboard/posts/${postSlug}`);
+  };
 
   return (
     <Box
       sx={{
         width: "100%",
         minHeight: "100%",
-        p: 2,
         display: "flex",
         flexDirection: "column",
         alignItems: "start",
+        p: 2,
       }}
     >
-      <Box sx={{ width: "100%", display:'flex',justifyContent:'space-between',alignItems:'center' }}>
-        <IconButton sx={{ my: 2 }} onClick={handleBack}>
-          <ArrowForwardOutlinedIcon />
-        </IconButton>
-
-        <Button component={Link} state={{ from: currentUrl }} to={`/dashboard/posts/${postSlug}/edit`} disabled={isPending || error} variant="outlined" color="warning">
-          ویرایش
-        </Button>
-      </Box>
+      <IconButton sx={{ my: 2 }} onClick={handleClick}>
+        <ArrowForwardOutlinedIcon />
+      </IconButton>
 
       <Box
         sx={{
-          display: isCenteredState ? "flex" : "block",
+          // display: isCenteredState ? "flex" : "block",
+          width:'100%',
+          display:'flex',
           flexGrow: 1,
-          width: "100%",
+          flex:1,
           alignItems: isCenteredState ? "center" : undefined,
           justifyContent: isCenteredState ? "center" : undefined,
         }}
@@ -61,7 +55,7 @@ export default function PostDetailPage() {
             مشکلی در بارگذاری صفحه رخ داد، لطفا صفحه را رفرش کنید
           </Typography>
         ) : (
-          <PostDetail {...data} />
+          <PostEditForm {...data} slug={postSlug} />
         )}
       </Box>
     </Box>

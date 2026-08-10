@@ -26,3 +26,16 @@ export function useCreatePostMutations() {
     },
   });
 }
+
+export function useEditPostMutations(){
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (payload) => {
+      return api.patch(`me/posts/${payload.slug}/`, payload.data)
+    },
+    onSuccess: (data, variables, onMutateResult, context) => {
+      queryClient.invalidateQueries({ queryKey: ["me", "posts"] })
+    }
+  })
+}

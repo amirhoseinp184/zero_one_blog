@@ -40,6 +40,7 @@ const queryClient = new QueryClient({
 import DashboardPostListPage from "./pages/dashboard/posts/PostListPage.jsx";
 import DashboardCreatePostPage from "./pages/dashboard/posts/CreatePostPage.jsx";
 import DashboardPostDetailPage from './pages/dashboard/posts/PostDetailPage.jsx'
+import DashboardPostEditPage from './pages/dashboard/posts/PostEditPage.jsx'
 
 createRoot(document.getElementById("root")).render(
   <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
@@ -75,6 +76,7 @@ createRoot(document.getElementById("root")).render(
                         element={<DashboardCreatePostPage />}
                       />
                       <Route path=":postSlug" element={<DashboardPostDetailPage />} />
+                      <Route path=":postSlug/edit" element={<DashboardPostEditPage />} />
                     </Route>
                   </Route>
                 </Route>
