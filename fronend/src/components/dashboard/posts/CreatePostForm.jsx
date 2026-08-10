@@ -14,6 +14,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useCreatePostMutations } from "../../../services/mutations";
 import { useAlert } from "../../../providers/AlertProvider";
 
+const EDITOR_EXTENTIONS = [StarterKit]
+
 export default function CreatePostForm() {
   const rteRef = useRef(null);
   const mutation = useCreatePostMutations();
@@ -27,8 +29,8 @@ export default function CreatePostForm() {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      title: "test",
-      content: "test",
+      title: "",
+      content: "",
     },
   });
 
@@ -41,9 +43,8 @@ export default function CreatePostForm() {
           status,
         };
 
-        await mutation.mutateAsync(payload);
+        await mutation.mutateAsync(payload)
         showAlert({ message: "پست با موفقیت ایجاد شد", severity: "success" });
-        // todo redirect user to public post page
       } catch (err) {
         showAlert({ message: "خظایی در ثبت پست وجود داشت، لطفا صفحه را رفرش کنید." });
       } finally {
@@ -87,7 +88,7 @@ export default function CreatePostForm() {
           <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
             <RichTextEditor
               ref={rteRef}
-              extensions={[StarterKit]}
+              extensions={EDITOR_EXTENTIONS}
               content={field.value}
               onUpdate={({ editor }) => {
                 field.onChange(editor.getHTML());

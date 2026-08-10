@@ -25,6 +25,8 @@ import {
   RichTextEditor,
 } from "mui-tiptap";
 
+const EDITOR_EXTENTIONS = [StarterKit]
+
 export default function PostEditForm(props) {
   const [editable, setEditable] = useState(true);
   const { title, content, status, slug } = props;
@@ -79,7 +81,7 @@ export default function PostEditForm(props) {
           <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
             <RichTextEditor
               ref={rteRef}
-              extensions={[StarterKit]}
+              extensions={EDITOR_EXTENTIONS}
               editable={editable}
               content={field.value}
               onUpdate={({ editor }) => {
