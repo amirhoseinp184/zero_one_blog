@@ -39,3 +39,18 @@ export function useEditPostMutations(){
     }
   })
 }
+
+
+export function useDeletePostMutations(){
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (slug) => {
+      return api.delete(`me/posts/${slug}/`)
+    },
+    onSuccess: (data, variables, onMutateResult, context) => {
+      queryClient.invalidateQueries({ queryKey: ["me", "posts"]})
+    },
+    retry:1
+  })
+}
