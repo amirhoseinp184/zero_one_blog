@@ -24,12 +24,13 @@ export function AlertProvider({children}){
   const [show, setShow] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [severity, setSeverity] = useState(null)
-  
+  const [autoHideDuration, setAutoHideDuration] = useState(2000) 
 
-  function showAlert({message, severity="error"}){
+  function showAlert({message, severity="error", autoHideDuration=2000}){
     setAlertMessage(message)
     setSeverity(severity)
     setShow(true)
+    setAutoHideDuration(autoHideDuration)
   }
 
   function closeAlert(){
@@ -39,24 +40,19 @@ export function AlertProvider({children}){
   }
 
 
-  function handleAlertClose(event, reason) {
-    if (reason == "clickaway") return;
-    closeAlert()
-  }
-
   function AuthAlert() {
     return (
       <Snackbar
-        autoHideDuration={2500}
+        autoHideDuration={autoHideDuration}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={show}
-        onClose={handleAlertClose}
+        onClose={closeAlert}
         slots={{ transition: SlideTransition }}
       >
         <Alert
           icon={null}
           severity={severity}
-          onClose={handleAlertClose}
+          onClose={closeAlert}
           variant="filled"
           sx={{
             justifyContent:'space-between',
