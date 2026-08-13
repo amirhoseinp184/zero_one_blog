@@ -51,7 +51,7 @@ class PublicPostRetriveView(generics.RetrieveAPIView):
 
 
 class CustomCursorPagination(CursorPagination):
-    ordering = 'created_at'
+    ordering = '-created_at'
 
 class UserFeedView(generics.ListAPIView, generics.GenericAPIView):
     serializer_class = serializers.UserFeedPostSerializer
