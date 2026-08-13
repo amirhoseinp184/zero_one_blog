@@ -14,18 +14,18 @@ export default function Post(props) {
           display: "flex",
           justifyContent: "space-between",
           transition: "all 0.2s",
-          cursor:'pointer',
+          cursor: "pointer",
           "&:hover": {
             transform: "translateY(-2px)",
-            borderColor: 'primary.main'
+            borderColor: "primary.main",
           },
         })}
       >
-        <Box>
+        <Box sx={{ wordBreak: "break-word", overflowWrap: "anywhere" }}>
           <Typography variant="h5" component={"h5"} fontWeight="bold">
             {title}
           </Typography>
-          <Typography variant="body1" color="textSecondary" sx={{mb:.5, mt:2}}>
+          <Typography variant="body1" color="textSecondary" sx={{ mb: 0.5, mt: 2 }}>
             {excerpt}
           </Typography>
           {status === "published" && (
@@ -34,7 +34,7 @@ export default function Post(props) {
             </Typography>
           )}
         </Box>
-        <Box sx={{alignSelf: 'center'}}>
+        <Box sx={{ alignSelf: "center" }}>
           <Chip
             label={status === "published" ? "منتشر شده" : "پیش نویس"}
             color={status === "published" ? "primary" : "default"}

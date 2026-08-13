@@ -10,7 +10,6 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import PostDetail from "../../../components/dashboard/posts/PostDetail";
 import DeletePostDialog from "../../../components/dashboard/posts/DeletePostDialog";
 
-
 export default function PostDetailPage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { postSlug } = useParams();
@@ -18,8 +17,8 @@ export default function PostDetailPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentUrl = `${location.pathname}${location.search}`;
-  const mutation = useDeletePostMutations()
-  const { showAlert } = useAlert()
+  const mutation = useDeletePostMutations();
+  const { showAlert } = useAlert();
 
   const handleBack = () => {
     const canGoBack = location.state?.from;
@@ -33,24 +32,29 @@ export default function PostDetailPage() {
   const openDeleteDialog = () => setShowDeleteDialog(true);
 
   const handlePostDelete = () => {
-    console.log('runned');
-    
+    console.log("runned");
+
     mutation.mutate(postSlug, {
-      onSuccess: (data) =>{
-        setShowDeleteDialog(false)
-        showAlert({message:'پست مورد نظر با موفقیت حذف شد.', severity:'success'})
-        navigate('/dashboard/posts/')
+      onSuccess: (data) => {
+        setShowDeleteDialog(false);
+        showAlert({ message: "پست مورد نظر با موفقیت حذف شد.", severity: "success" });
+        navigate("/dashboard/posts/");
       },
       onError: (error) => {
-        setShowDeleteDialog(false)
-        showAlert({message: 'مشکلی در اجرای درخواست بوجود آمد.', serverity: 'error'})
+        setShowDeleteDialog(false);
+        showAlert({ message: "مشکلی در اجرای درخواست بوجود آمد.", serverity: "error" });
       },
-    })
-  }
+    });
+  };
 
   return (
     <>
-      <DeletePostDialog isPending={mutation.isPending} onPostDelete={handlePostDelete} open={showDeleteDialog} onClose={closeDeleteDialog} />
+      <DeletePostDialog
+        isPending={mutation.isPending}
+        onPostDelete={handlePostDelete}
+        open={showDeleteDialog}
+        onClose={closeDeleteDialog}
+      />
       <Box
         sx={{
           width: "100%",
@@ -59,6 +63,8 @@ export default function PostDetailPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "start",
+          wordBreak: "break-word",
+          overflowWrap: "anywhere",
         }}
       >
         <Box
