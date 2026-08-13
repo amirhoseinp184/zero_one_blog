@@ -99,7 +99,7 @@ export default function UserProfileMenu({ user }) {
 
             <ButtonBase
               component={Link}
-              to={`/@${user.username}`}
+              to={`/u/${user.username}`}
               sx={{ color: "primary.main", fontSize: 15, borderRadius: 2 }}
             >
               مشاهده پروفایل

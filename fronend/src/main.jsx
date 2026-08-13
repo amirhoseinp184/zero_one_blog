@@ -59,7 +59,7 @@ createRoot(document.getElementById("root")).render(
               <Routes>
                 <Route path="/" element={<HomeLayout />}>
                   <Route index element={<HomePage />} />
-                  <Route path="/:username" element={<UserProfilePage />} />
+                  <Route path="u/:username" element={<UserProfilePage />} />
 
                   <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route
