@@ -36,6 +36,11 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
 });
 
+
+import * as z from 'zod'
+z.config(z.locales.fa())
+
+
 //posts pages
 import DashboardPostListPage from "./pages/dashboard/posts/PostListPage.jsx";
 import DashboardCreatePostPage from "./pages/dashboard/posts/CreatePostPage.jsx";

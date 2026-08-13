@@ -1,183 +1,104 @@
-import { Box, Button, FormHelperText, TextField, CircularProgress } from "@mui/material";
-import StarterKit from "@tiptap/starter-kit";
-import {
-  MenuButtonBold,
-  MenuButtonItalic,
-  MenuControlsContainer,
-  MenuDivider,
-  MenuSelectHeading,
-  RichTextEditor,
-} from "mui-tiptap";
-import { useEffect, useRef, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Box, TextField } from "@mui/material";
+
+import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { handleRequestError } from "../../../utils/handleRequestError";
 
 import { useCreatePostMutations } from "../../../services/mutations";
 import { useAlert } from "../../../providers/AlertProvider";
+import { useNavigate } from "react-router";
 
-const EDITOR_EXTENTIONS = [StarterKit]
+import { zodResolver } from "@hookform/resolvers/zod";
+import postSchema from "../../../schemas/postSchema";
+
+import RHFTextField from "../../ui/RHFTextField";
+import RHFTextEditor from "../../ui/RHFTextEditor";
+import LoadingButton from "../../ui/LoadingButton";
 
 export default function CreatePostForm() {
-  const rteRef = useRef(null);
   const mutation = useCreatePostMutations();
   const { showAlert } = useAlert();
-  const [submittingStatus, setSubmittingStatus] = useState(null);
+  const navigate = useNavigate();
+
+  const methods = useForm({
+    defaultValues: {
+      title: "",
+      content: "",
+      status: "published",
+    },
+    resolver: zodResolver(postSchema),
+    disabled: mutation.isPending,
+  });
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-  });
+    setError,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting, isValid, disabled },
+  } = methods;
 
-  const onSubmitWithStatus = (status) => {
-    return handleSubmit(async (data) => {
-      try {
-        setSubmittingStatus(status);
-        const payload = {
-          ...data,
-          status,
-        };
+  const onValid = async (data) => {
+    try {
+      const payload = {
+        ...data,
+      };
 
-        await mutation.mutateAsync(payload)
-        showAlert({ message: "پست با موفقیت ایجاد شد", severity: "success" });
-      } catch (err) {
-        showAlert({ message: "خظایی در ثبت پست وجود داشت، لطفا صفحه را رفرش کنید." });
-      } finally {
-        setSubmittingStatus(null);
-      }
-    });
+      const res = await mutation.mutateAsync(payload);
+      showAlert({ message: "پست با موفقیت ایجاد شد", severity: "success" });
+      navigate(`/dashboard/posts/${res.data.slug}`);
+    } catch (err) {
+      handleRequestError(err, showAlert, setError);
+    }
   };
 
-  const isPending = mutation.isPending || mutation.isLoading;
+  const status = watch("status");
 
   return (
-    <Box component="form" sx={{ display: "flex", flex: 1, flexDirection: "column", gap: 2 }}>
-      {/* Title Field */}
-      <TextField
-        label="عنوان پست"
-        {...register("title", { required: "لطفا عنوان پست را وارد کنید" })}
-        error={!!errors.title}
-        helperText={errors.title?.message}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: 1,
-            "& fieldset": {
-              borderWidth: 1,
-            },
-            "&.Mui-focused fieldset": {
-              borderWidth: 2,
-            },
-          },
-        }}
-      />
-
-      {/* Rich Text Editor Field */}
-      <Controller
-        name="content"
-        control={control}
-        rules={{
-          required: "محتوای پست نمی‌تواند خالی باشد",
-          validate: (value) => value !== "<p></p>" || "لطفا محتوای پست را وارد کنید",
-        }}
-        render={({ field }) => (
-          <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            <RichTextEditor
-              ref={rteRef}
-              extensions={EDITOR_EXTENTIONS}
-              content={field.value}
-              onUpdate={({ editor }) => {
-                field.onChange(editor.getHTML());
-              }}
-              sx={(theme) => ({
-                borderRadius: 1,
-                "& .MuiTiptap-FieldContainer-notchedOutline, &:hover .MuiTiptap-FieldContainer-notchedOutline":
-                  {
-                    borderColor: errors.content ? theme.palette.error.main : theme.palette.primary,
-                    borderWidth: 1,
-                  },
-
-                "& .MuiTiptap-FieldContainer-root.Mui-focused .MuiTiptap-FieldContainer-notchedOutline, &:focus-within .MuiTiptap-FieldContainer-notchedOutline":
-                  {
-                    borderWidth: 2,
-                  },
-                overflow: "hidden",
-                display: "flex",
-                flex: 1,
-                flexDirection: "column",
-                borderColor: errors.content ? "error.main" : "divider",
-                "& .MuiTiptap-RichTextContent-root": {
-                  flex: 1,
-                  minHeight: 200,
-                  overflowY: "auto",
-                  overflowX: "hidden",
-                },
-              })}
-              renderControls={() => (
-                <MenuControlsContainer>
-                  <MenuSelectHeading />
-                  <MenuDivider />
-                  <MenuButtonBold />
-                  <MenuButtonItalic />
-                </MenuControlsContainer>
-              )}
-            />
-            {errors.content && (
-              <FormHelperText error sx={{ mx: 1.5, mt: 0.5 }}>
-                {errors.content.message}
-              </FormHelperText>
-            )}
-          </Box>
-        )}
-      />
-
-      {/* Action Buttons */}
-      <Box sx={{ display: "flex", gap: 1.5, my: 1, alignSelf: "flex-end" }}>
-        <Button
-          type="submit"
+    <FormProvider {...methods}>
+      <Box
+        onSubmit={handleSubmit(onValid)}
+        component="form"
+        sx={{ display: "flex", flex: 1, flexDirection: "column", gap: 2 }}
+      >
+        <RHFTextField
+          label="عنوان پست"
+          name="title"
           variant="outlined"
-          disabled={isPending}
-          onClick={onSubmitWithStatus("draft")}
-          sx={{ height: "100%" }}
-        >
-          ذخیره به عنوان پیش نویس
-          {submittingStatus === "draft" && (
-            <CircularProgress
-              sx={{
-                position: "absolute",
-                inset: 0,
-                m: "auto",
-                display: "block",
-              }}
-              size={24}
-            />
-          )}
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isPending}
-          onClick={onSubmitWithStatus("published")}
-          sx={{ position: "relative" }}
-        >
-          انتشار
-          {submittingStatus === "published" && (
-            <CircularProgress
-              sx={{
-                position: "absolute",
-                inset: 0,
-                m: "auto",
-                display: "block",
-              }}
-              size={24}
-            />
-          )}
-        </Button>
+          helperText={["باید حداقل 10 کاراکتر باشد.", "باید حداکثر 100 کاراکتر باشد."]}
+          disabled={disabled}
+          showLength={true}
+        />
+
+        <RHFTextEditor
+          name="content"
+          disabled={disabled}
+          helperText={"باید حداقل 300 کاراکتر باشد."}
+        />
+
+        <Box sx={{ display: "flex", gap: 1.5, my: 1, alignSelf: "flex-end" }}>
+          <LoadingButton
+            type="submit"
+            variant="outlined"
+            onClick={() => setValue("status", "draft", { shouldValidate: true })}
+            disabled={disabled || !isValid}
+            loading={isSubmitting && status == "draft"}
+          >
+            ذخیره به عنوان پیش نویس
+          </LoadingButton>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            onClick={() => setValue("status", "published", { shouldValidate: true })}
+            disabled={disabled || !isValid}
+            loading={isSubmitting && status == "published"}
+          >
+            انتشار
+          </LoadingButton>
+        </Box>
       </Box>
-    </Box>
+    </FormProvider>
   );
 }
