@@ -2,173 +2,86 @@ import { useRef, useState } from "react";
 import { useEditPostMutations } from "../../../services/mutations";
 import { useNavigate } from "react-router";
 
-import { useForm, Controller } from "react-hook-form";
-import {
-  Box,
-  TextField,
-  Button,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { useForm, Controller, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useAlert } from "../../../providers/AlertProvider";
-
-import StarterKit from "@tiptap/starter-kit";
-import {
-  MenuButtonBold,
-  MenuButtonItalic,
-  MenuControlsContainer,
-  MenuDivider,
-  MenuSelectHeading,
-  RichTextEditor,
-} from "mui-tiptap";
-
-const EDITOR_EXTENTIONS = [StarterKit]
+import LoadingButton from "../../ui/LoadingButton";
+import RHFTextField from "../../ui/RHFTextField";
+import RHFTextEditor from "../../ui/RHFTextEditor";
+import postSchema from "../../../schemas/postSchema";
 
 export default function PostEditForm(props) {
-  const [editable, setEditable] = useState(true);
   const { title, content, status, slug } = props;
-  const rteRef = useRef(null);
   const navigate = useNavigate();
   const { showAlert } = useAlert();
   const mutation = useEditPostMutations();
   const defaultValues = { title, content, status };
+  const methods = useForm({ defaultValues, resolver: zodResolver(postSchema), mode: "onChange" });
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isDirty, isSubmitting },
-  } = useForm({ defaultValues });
+    formState: { errors, isDirty, isSubmitting, isValid },
+  } = methods;
 
   const onValid = async (data) => {
     try {
-      setEditable(false);
       await mutation.mutateAsync({ slug, data });
       showAlert({ message: "پست با موفقیت ذخیره شد.", severity: "success" });
-      setTimeout(() => {
-        navigate(`/dashboard/posts/${slug}`);
-      }, 2500);
+      navigate(`/dashboard/posts/${slug}`);
     } catch (err) {
       showAlert({ message: "خظایی در ذخیره پست وجود داشت، لطفا صفحه را رفرش کنید." });
     }
   };
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}
-      component="form"
-      onSubmit={handleSubmit(onValid)}
-    >
-      <TextField
-        disabled={!editable}
-        label="عنوان پست"
-        {...register("title")}
-        sx={{
-          width: "100%",
-        }}
-      />
+    <FormProvider {...methods}>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}
+        component="form"
+        onSubmit={handleSubmit(onValid)}
+      >
+        <RHFTextField
+          label="عنوان پست"
+          name="title"
+          variant="outlined"
+          helperText={["باید حداقل 10 کاراکتر باشد.", "باید حداکثر 100 کاراکتر باشد."]}
+          showLength={true}
+          disabled={isSubmitting}
+        />
 
-      <Controller
-        name="content"
-        control={control}
-        rules={{
-          required: "محتوای پست نمی‌تواند خالی باشد",
-          validate: (value) => value !== "<p></p>" || "لطفا محتوای پست را وارد کنید",
-        }}
-        render={({ field }) => (
-          <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            <RichTextEditor
-              ref={rteRef}
-              extensions={EDITOR_EXTENTIONS}
-              editable={editable}
-              content={field.value}
-              onUpdate={({ editor }) => {
-                field.onChange(editor.getHTML());
-              }}
-              sx={(theme) => ({
-                ".MuiTiptap-RichTextContent-root": {
-                  transition: "all 0.2s",
-                  opacity: editable ? 1 : 0.5,
-                },
-                borderRadius: 1,
-                "& .MuiTiptap-FieldContainer-notchedOutline, &:hover .MuiTiptap-FieldContainer-notchedOutline":
-                  {
-                    borderColor: errors.content ? theme.palette.error.main : theme.palette.primary,
-                    borderWidth: 1,
-                  },
+        <RHFTextEditor
+          name="content"
+          helperText={"باید حداقل 300 کاراکتر باشد."}
+          disabled={isSubmitting}
+        />
 
-                "& .MuiTiptap-FieldContainer-root.Mui-focused .MuiTiptap-FieldContainer-notchedOutline, &:focus-within .MuiTiptap-FieldContainer-notchedOutline":
-                  {
-                    borderWidth: 2,
-                  },
-                overflow: "hidden",
-                display: "flex",
-                flex: 1,
-                flexDirection: "column",
-                borderColor: errors.content ? "error.main" : "divider",
-                "& .MuiTiptap-RichTextContent-root": {
-                  flex: 1,
-                  minHeight: 200,
-                  overflowY: "auto",
-                  overflowX: "hidden",
-                },
-              })}
-              renderControls={() => (
-                <MenuControlsContainer>
-                  <MenuSelectHeading />
-                  <MenuDivider />
-                  <MenuButtonBold />
-                  <MenuButtonItalic />
-                </MenuControlsContainer>
-              )}
-            />
-            {errors.content && (
-              <FormHelperText error sx={{ mx: 1.5, mt: 0.5 }}>
-                {errors.content.message}
-              </FormHelperText>
-            )}
-          </Box>
-        )}
-      />
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <FormControl disabled={isSubmitting} fullWidth>
+              <InputLabel id="status">وضعیت</InputLabel>
+              <Select {...field} labelId="status" label="وضعیت">
+                <MenuItem value="draft">پیش نویش</MenuItem>
+                <MenuItem value="published">انتشار</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+        />
 
-      <Controller
-        name="status"
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth>
-            <InputLabel id="status">وضعیت</InputLabel>
-            <Select {...field} labelId="status" label="وضعیت">
-              <MenuItem value="draft">پیش نویش</MenuItem>
-              <MenuItem value="published">انتشار</MenuItem>
-            </Select>
-          </FormControl>
-        )}
-      />
-
-      <Box>
-        <Button
+        <LoadingButton
           type="submit"
           color="warning"
           variant="outlined"
-          disabled={!isDirty || isSubmitting || !editable}
+          disabled={!isDirty || isSubmitting || !isValid}
           sx={{ ml: "auto", display: "block" }}
+          loading={isSubmitting}
         >
-          {isSubmitting && (
-            <CircularProgress
-              sx={{
-                position: "absolute",
-                inset: 0,
-                m: "auto",
-                display: "block",
-              }}
-              size={24}
-            />
-          )}
           ذخیره
-        </Button>
+        </LoadingButton>
       </Box>
-    </Box>
+    </FormProvider>
   );
 }
