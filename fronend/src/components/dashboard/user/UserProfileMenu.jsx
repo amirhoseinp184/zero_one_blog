@@ -90,6 +90,7 @@ export default function UserProfileMenu({ user }) {
             py: 1,
             ":hover": { bgcolor: "initial" },
           }}
+          onClick={handleClose}
           disableRipple={true}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
