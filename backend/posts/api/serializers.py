@@ -17,7 +17,8 @@ class PostListSerializer(serializers.ModelSerializer):
         fields = ("status", "title", "slug", "published_at", 'excerpt', 'content')
         read_only_fields = ('slug',)
         extra_kwargs = {
-            'content': {'write_only': True}
+            'title': {'min_length': 10, 'max_length': 100},
+            'content': {'write_only': True, 'min_length': 300}
         }
 
     def get_excerpt(self, obj):
@@ -36,7 +37,10 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = postModels.Post
         fields = ("author" ,"status", "title", "content")
-        extra_kwargs = {'content': {'min_length': 300}}
+        extra_kwargs = {
+            'title': {'min_length': 10, 'max_length': 100},
+            'content': {'min_length': 300}
+        }
 
 
 class PublicPostRetrieveSerializer(serializers.ModelSerializer):
