@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import Logout from '@mui/icons-material/Logout'
 import Settings from '@mui/icons-material/Settings'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { grey } from "@mui/material/colors";
 import { Link } from 'react-router'
 
@@ -120,6 +121,19 @@ export default function UserProfileMenu({ user }) {
               <Settings fontSize="small" sx={{ color: grey[300] }} />
             </ListItemIcon>{" "}
             تنظیمات حساب کاربری
+        </MenuItem>
+
+        <MenuItem
+          sx={{ py: 1.5, transition: "background .3s", color: grey[300] }}
+          disableRipple={true}
+          onClick={handleClose}
+          component={Link}
+          to="/dashboard/posts/"
+        >
+            <ListItemIcon>
+              <ArticleOutlinedIcon fontSize="small" sx={{ color: grey[300] }} />
+            </ListItemIcon>
+            پست های من
         </MenuItem>
 
         <MenuItem
