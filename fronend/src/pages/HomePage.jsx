@@ -1,6 +1,34 @@
-import { Typography } from "@mui/material";
-
+import { Button, Stack, Typography, Box, Grid } from "@mui/material";
+import { useFeedQuery } from "../services/queries";
+import FeedPostCard from '../components/FeedPostCard'
+import SectionHeader from "../components/SectionHeader";
+import { Fragment } from "react";
+import LoadingButton from '../components/ui/LoadingButton'
 
 export default function HomePages() {
-  return <Typography variant="h3">Home Page</Typography>;
+  const { data, error, fetchNextPage, isFetchingNextPage, hasNextPage } = useFeedQuery();
+
+  return (
+    <Box>
+      <SectionHeader/>
+
+      {isFetchingNextPage && <p>Loading</p>}
+
+      <Grid container spacing={2} sx={{ p: 5 }}>
+        {data?.pages.map((group, i) => (
+          <Fragment key={i}>
+            {group.results.map((post, i) => (
+              <Grid size={6}><FeedPostCard {...post} /></Grid>
+            ))}
+          </Fragment>
+        ))}
+
+        {hasNextPage && 
+          <LoadingButton loading={isFetchingNextPage} sx={{ my: 6, mx:'auto' }} variant="text"  onClick={fetchNextPage}>
+            بارگذاری بیشتر
+          </LoadingButton>
+        }
+      </Grid>
+    </Box>
+  );
 }

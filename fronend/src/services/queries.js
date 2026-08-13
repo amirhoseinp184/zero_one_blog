@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
 import { api } from "./api";
 
 import { useAuth } from '../providers/AuthProvider'
@@ -46,5 +46,18 @@ export function useMePostDetailQuery({slug}){
       const res = await api.get(`/me/posts/${slug}`)
       return res.data
     }
+  })
+}
+
+
+export function useFeedQuery(){
+  return useInfiniteQuery({
+    queryKey: ['feed'],
+    queryFn: async () => {
+      const res = await api.get(`feed/`)
+      return res.data
+    },
+    initialPageParam: '',
+    getNextPageParam: (lastPage, pages) => lastPage.next
   })
 }
