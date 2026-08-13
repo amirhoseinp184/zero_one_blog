@@ -49,3 +49,9 @@ class PublicPostRetrieveSerializer(serializers.ModelSerializer):
         model = postModels.Post
         fields = ('title', 'content', 'status', 'reading_time_minutes', 'updated_at')
 
+
+
+class UserFeedPostSerializer(PostListSerializer):
+    author = AuthorPreviewSerializer()
+    class Meta(PostListSerializer.Meta):
+        fields = ("status", "title", "slug", "published_at", 'excerpt', 'content', 'author')

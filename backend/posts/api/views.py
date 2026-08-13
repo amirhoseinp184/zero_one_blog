@@ -1,5 +1,9 @@
+from django.db.models import Window, F
+from django.db.models.functions import RowNumber
+
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import CursorPagination
 
 from . import serializers
 from posts import models as PostsModels
@@ -45,3 +49,24 @@ class PublicPostRetriveView(generics.RetrieveAPIView):
 
         return queryset
 
+
+class CustomCursorPagination(CursorPagination):
+    ordering = 'created_at'
+
+class UserFeedView(generics.ListAPIView, generics.GenericAPIView):
+    serializer_class = serializers.UserFeedPostSerializer
+    pagination_class = CustomCursorPagination
+
+    def get_queryset(self):
+        # Rank each post per author by recency
+        queryset = PostsModels.Post.objects.annotate(
+            author_rank=Window(
+                expression=RowNumber(),
+                partition_by=[F('author_id')],
+                order_by=F('created_at').desc()
+            )
+        ).filter(author_rank__lte=2).order_by('-created_at') # Max 2 posts per author
+        return queryset
+
+
+        
