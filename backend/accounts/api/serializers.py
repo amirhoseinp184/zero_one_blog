@@ -193,3 +193,9 @@ class SettingsSerializer(serializers.Serializer):
         instance.save()
 
         return instance
+
+
+class PublicProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=get_user_model()
+        fields=("name", "avatar", "about_me", "username")

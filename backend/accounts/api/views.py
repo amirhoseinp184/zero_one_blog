@@ -2,6 +2,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from rest_framework.generics import GenericAPIView
 from rest_framework import mixins
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import Throttled, AuthenticationFailed
@@ -348,3 +349,9 @@ class SettingsView(mixins.UpdateModelMixin, mixins.RetrieveModelMixin, GenericAP
 
     def get_object(self):
         return self.request.user
+
+
+class PublicProfileView(generics.RetrieveAPIView, GenericAPIView):
+    serializer_class = serializers.PublicProfileSerializer
+    queryset = User.objects.all()
+    lookup_field = 'username'
