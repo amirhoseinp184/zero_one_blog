@@ -11,23 +11,24 @@ import {
   MenuItem,
   ListItemIcon,
   Fade,
+  Box,
+  Link,
 } from "@mui/material";
-import Settings from '@mui/icons-material/Settings'
+import Settings from "@mui/icons-material/Settings";
 import ZeroOne from "/src/assets/images//zero_one.png";
 import { grey } from "@mui/material/colors";
-import { Link } from "react-router";
+import { Link as RouterLink } from "react-router";
 
 import UserProfileMenu from "../dashboard/user/UserProfileMenu";
 
 import { useAuth } from "../../providers/AuthProvider";
 import { useUserQuery } from "../../services/queries";
 
-
 function AuthButtons() {
   return (
     <div>
       <Button
-        component={Link}
+        component={RouterLink}
         to="/login"
         sx={{
           mr: 1,
@@ -40,7 +41,7 @@ function AuthButtons() {
         ورود
       </Button>
       <Button
-        component={Link}
+        component={RouterLink}
         to="/register"
         sx={{
           "&:hover": {
@@ -73,10 +74,25 @@ export default function Header() {
         borderBottom: `.5px solid ${grey[700]}`,
       }}
     >
-      <Link to="/">
-        <Typography variant="h1" sx={{ height: "40px", display: "flex" }}>
-          <img src={ZeroOne} />
-        </Typography>
+      <Link
+        component={RouterLink}
+        to="/"
+        underline="none"
+        color="inherit"
+        sx={{ display: "inline-flex", alignItems: "center", gap: 1.5 }}
+      >
+        <Box sx={{ display: "flex", alignItems:'center', gap:1.5 }}>
+          <Box component="img" src={ZeroOne} alt="صفر و یک" sx={{height:40, width:'auto'}} />
+          
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6" component="span" sx={{ lineHeight: 1.2}}>
+              صفر و یک
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              دانش تجربه رشد
+            </Typography>
+          </Box>
+        </Box>
       </Link>
 
       {authReady ? (
