@@ -54,3 +54,31 @@ export function useDeletePostMutations(){
     retry:1
   })
 }
+
+export function useFollowMutation({username}){
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async () => {
+      const res = await api.post(`u/${username}/follow/`)
+      return res.data
+    },
+    onSuccess: ()=> {
+      queryClient.invalidateQueries({queryKey: ["profile", username]})
+    }
+  })
+}
+
+export function useUnfollowMutation({username}){
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async () => {
+      const res = await api.post(`u/${username}/unfollow/`)
+      return res.data
+    },
+    onSuccess: ()=> {
+      queryClient.invalidateQueries({queryKey: ["profile", username]})
+    }
+  })
+}

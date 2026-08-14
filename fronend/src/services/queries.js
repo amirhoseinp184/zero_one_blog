@@ -17,13 +17,14 @@ export function useUserQuery() {
   });
 }
 
-export function useUserProfileQuery({ username }) {
+export function useUserProfileQuery({ username, enabled=true }) {
   return useQuery({
     queryKey: ["profile", username],
     queryFn: async () => {
       const res = await api.get(`u/${username}`);
       return res.data;
     },
+    enabled,
     retry:1
   });
 }

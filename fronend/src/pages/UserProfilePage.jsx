@@ -5,36 +5,49 @@ import { Avatar, Box, Typography, Button, CircularProgress, Grid } from "@mui/ma
 import { grey } from "@mui/material/colors";
 import { useAuth } from "../providers/AuthProvider";
 
+import { useFollowMutation, useUnfollowMutation } from "../services/mutations";
+
 import ProfilePostCard from "../components/ProfilePostCard";
+import LoadingButton from '../components/ui/LoadingButton'
 
 export default function UserProfilePage() {
-  const location = useLocation();
-  const currentUrl = `${location.pathname}${location.search}`;
-
   const params = useParams();
   const username = params["username"];
 
-  const { data, isLoading, error } = useUserProfileQuery({
-    username: username,
+  const followMutation = useFollowMutation({username})
+  const unfollowMutation = useUnfollowMutation({username})
+
+  const location = useLocation();
+  const currentUrl = `${location.pathname}${location.search}`;
+
+  const { isAuthenticated, isAuthLoading } = useAuth();
+  const { data: userData, isLoading: isUserLoading } = useUserQuery({
+    enabled: isAuthenticated,
   });
+
+  const { data, isLoading, error, isEnabled } = useUserProfileQuery({
+    username: username, enabled:!isAuthLoading
+  });
+  
   const {
     data: postsData,
     isLoading: isLoadingPosts,
     error: postsError,
   } = usePublicPostListQuery({ username });
 
-  const { isAuthenticated } = useAuth();
-  const { data: userData, isLoading: isUserLoading } = useUserQuery({
-    enabled: isAuthenticated,
-  });
-
   if (error) {
     if (error?.response?.status === 404) return <NotFoundPage />;
   }
 
-  const isCentered = isLoading || isUserLoading || error;
+  const isCentered = isLoading || isUserLoading || error || !isEnabled;
 
   const isCurrentUserProfile = isAuthenticated && userData?.username === data?.username;
+
+  const toggleFollowing = () => {
+    if (data.is_following) unfollowMutation.mutate()
+    else followMutation.mutate()
+  }
+
 
   return (
     <>
@@ -52,7 +65,7 @@ export default function UserProfilePage() {
             مشکلی در بارگذاری صفحه رخ داد، لطفا صفحه را رفرش کنید
           </Typography>
         ) : null}
-        {isCentered && (isLoading || isUserLoading) ? (
+        {isCentered && (isLoading || isUserLoading || !isEnabled) ? (
           <Typography>
             <CircularProgress />
           </Typography>
@@ -80,12 +93,24 @@ export default function UserProfilePage() {
               )}
               <Box sx={{ display: "flex", gap: 5, ml: -2 }}>
                 <Typography fontSize={14} color={grey[500]}>
-                  توسط {data.numberOfFollowers || 0} نفر دنبال میشود
+                  توسط {data.followers_count} نفر دنبال میشود
                 </Typography>
                 <Typography fontSize={14} color={grey[500]}>
-                  {data.numberOfFollowing || 0} را دنبال میکنید
+                  {data.following_count}  نفر را دنبال میکنید
                 </Typography>
               </Box>
+
+              {(isAuthenticated && !isCurrentUserProfile) &&
+                <LoadingButton
+                  variant="outlined"
+                  sx={{borderRadius:4}}
+                  color={data.is_following ? 'error' : 'success'}
+                  onClick={toggleFollowing}
+                >
+                  {data.is_following ? 'لفو دنبال کردن' : 'دنبال کردن'}
+                </LoadingButton>
+              }
+            
               {isCurrentUserProfile && (
                 <Button
                   component={Link}
