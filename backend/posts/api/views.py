@@ -37,6 +37,17 @@ class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
         return queryset
 
 
+class PublicPostList(generics.ListAPIView):
+    queryset = PostsModels.Post.objects.filter(status=PostsModels.Post.Status.PUBLISHED)
+    serializer_class = serializers.PublicPostListSerializer 
+    
+    def get_queryset(self):
+        username = self.kwargs['username']
+        queryset = super().get_queryset()
+        queryset = queryset.filter(author__username=username)
+
+        return queryset
+
 class PublicPostRetriveView(generics.RetrieveAPIView):
     queryset = PostsModels.Post.objects.filter(status=PostsModels.Post.Status.PUBLISHED)
     serializer_class = serializers.PublicPostRetrieveSerializer

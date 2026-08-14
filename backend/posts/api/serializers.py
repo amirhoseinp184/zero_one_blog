@@ -43,6 +43,16 @@ class PostDetailSerializer(serializers.ModelSerializer):
         }
 
 
+class PublicPostListSerializer(serializers.ModelSerializer):
+    excerpt = serializers.SerializerMethodField()
+    class Meta:
+        model = postModels.Post
+        fields= ("title", 'content', 'reading_time_minutes', 'updated_at', 'excerpt')
+
+    def get_excerpt(self, obj):
+            content = strip_tags(obj.content)
+            return Truncator(content).chars(140)
+    
 class PublicPostRetrieveSerializer(serializers.ModelSerializer):
     author=AuthorPreviewSerializer()
     class Meta:
