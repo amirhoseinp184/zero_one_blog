@@ -16,5 +16,7 @@ auth_urlpatterns = [
 app_name = "accounts-api"
 urlpatterns = [
     path("auth/", include(auth_urlpatterns)),
-    path('u/<str:username>/', views.PublicProfileView.as_view(), name='public-profile')
+    path('u/<str:username>/', views.PublicProfileView.as_view(), name='public-profile'),
+    path('u/<str:username>/follow/', views.FollowUserView.as_view(), name='follow-user')
+
 ]

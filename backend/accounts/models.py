@@ -10,6 +10,7 @@ from django.contrib.auth.models import (
 from django.utils.crypto import get_random_string, constant_time_compare
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
@@ -99,6 +100,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     about_me = models.TextField(null=True, blank=True)
     gender = models.TextField(choices=GenderChoices, null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
+    following = models.ManyToManyField(
+        'self',
+        through='Follow',
+        through_fields=('follower', 'following'),
+        symmetrical=False,
+        related_name='followers'
+    )
+    
 
     is_staff = models.BooleanField(default=False)
 
@@ -123,6 +132,29 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.name = random_string
 
         return super().save(*args, force_insert, force_update, using, update_fields)
+
+    def follow(self, user_to_follow):
+        """Follow another user."""
+        if self != user_to_follow:
+            Follow.objects.get_or_create(
+                follower=self, following=user_to_follow
+            )
+
+    def unfollow(self, user_to_unfollow):
+        """Unfollow another user."""
+        Follow.objects.filter(
+            follower=self, following=user_to_unfollow
+        ).delete()
+
+    def is_following(self, user):
+        """Check if self is following the given user."""
+        return self.following.filter(id=user.id).exists()
+
+    def is_followed_by(self, user):
+        """Check if self is followed by the given user."""
+        return self.followers.filter(id=user.id).exists()
+    
+
 
 
 class Otp(models.Model):
@@ -415,4 +447,37 @@ class ForgotPasswordEmailOtp(EmailOtp):
 
     class Meta:
         proxy = True
+
+
+class Follow(models.Model):
+    follower = models.ForeignKey(
+        User,
+        related_name="following_relationships",
+        on_delete=models.CASCADE
+    )
+    following = models.ForeignKey(
+        User,
+        related_name='followers_relationships',
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['follower', 'following'], name='unique_followers'
+            )
+        ]
+        ordering=['-created_at']
+
+    def clean(self):
+        if self.follower == self.following:
+            raise ValidationError("Users cannot follow themeselves.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.follower} follows {self.following}'
 

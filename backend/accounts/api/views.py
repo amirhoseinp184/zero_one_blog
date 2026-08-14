@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model, logout
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 from . import serializers
 from accounts import models
@@ -355,3 +356,19 @@ class PublicProfileView(generics.RetrieveAPIView, GenericAPIView):
     serializer_class = serializers.PublicProfileSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
+
+
+class FollowUserView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        username = kwargs.get('username')
+        user = get_object_or_404(User, username=username)
+
+        if request.user == user:
+            return Response({'detail': 'you can\'t follow yourself'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if(not request.user.is_following(user)):
+            request.user.follow(user)
+
+        return Response({}, status=status.HTTP_200_OK)
