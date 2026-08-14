@@ -44,10 +44,10 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
 
 class PublicPostRetrieveSerializer(serializers.ModelSerializer):
-
+    author=AuthorPreviewSerializer()
     class Meta:
         model = postModels.Post
-        fields = ('title', 'content', 'status', 'reading_time_minutes', 'updated_at')
+        fields = ('title', 'content', 'status', 'reading_time_minutes', 'updated_at', 'author')
 
 
 
