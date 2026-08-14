@@ -24,7 +24,7 @@ export default function UserProfilePage() {
 
   const isCentered = isLoading || isUserLoading || error;
 
-  const isCurrentUserProfile = isAuthenticated && userData.username === data.username;
+  const isCurrentUserProfile = isAuthenticated && userData?.username === data?.username;
 
   return (
     <>
