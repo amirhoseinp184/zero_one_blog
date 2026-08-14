@@ -3,8 +3,6 @@ import validator from "validator";
 
 
 export function handleRequestError(err, showAlert, setError) {
-  console.log(err);
-
   if (!err.response) {
     showAlert({ message: "مشکلی در انجام درخواست پیش آمد." });
   } else {

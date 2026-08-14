@@ -5,8 +5,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 
 export default function FeedPostCard(props) {
-console.log(props);
-
   const {
     Component = "div",
     title,

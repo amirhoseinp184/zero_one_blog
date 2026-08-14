@@ -32,8 +32,6 @@ export default function PostDetailPage() {
   const openDeleteDialog = () => setShowDeleteDialog(true);
 
   const handlePostDelete = () => {
-    console.log("runned");
-
     mutation.mutate(postSlug, {
       onSuccess: (data) => {
         setShowDeleteDialog(false);
