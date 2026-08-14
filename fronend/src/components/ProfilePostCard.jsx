@@ -5,14 +5,14 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 
 export default function FeedPostCard(props) {
-  console.log(props);
-  
+console.log(props);
+
   const {
     Component = "div",
     title,
     category = "مقاله",
     reading_time_minutes = 5,
-    published_at,
+    updated_at,
     excerpt,
     author,
     ...rest
@@ -32,10 +32,7 @@ export default function FeedPostCard(props) {
           position: "relative",
           overflow: "hidden",
           cursor: "pointer",
-          background:
-            theme.palette.mode === "dark"
-              ? "linear-gradient(145deg, rgba(21, 75, 184, 0.23), rgba(25, 26, 28, 0.47))"
-              : "linear-gradient(145deg, #ffffff, #f8fafc)",
+
           border: `1px solid ${
             theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)"
           }`,
@@ -136,7 +133,7 @@ export default function FeedPostCard(props) {
           <Stack direction="row" spacing={0.5} alignItems="center">
             <CalendarTodayOutlinedIcon sx={{ fontSize: 13, color: "text.disabled" }} />
             <Typography variant="caption" color="text.secondary" fontWeight={500}>
-              {formatDate(published_at)}
+              {formatDate(updated_at)}
             </Typography>
           </Stack>
 

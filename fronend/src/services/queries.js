@@ -63,6 +63,16 @@ export function useFeedQuery(){
 }
 
 
+export function usePublicPostListQuery({username}){
+  return useQuery({
+    queryKey: ['public', username],
+    queryFn: async() => {
+      const res = await api.get(`u/${username}/posts/`)
+      return res.data
+    }
+  })
+}
+
 export function usePublicPostDetailQuery({username, postSlug}){
   return useQuery({
     queryKey: ['public', username, postSlug],

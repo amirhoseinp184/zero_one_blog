@@ -1,17 +1,27 @@
-import { Link, useParams } from "react-router";
+import { Link, useParams, useLocation } from "react-router";
 import NotFoundPage from "./NotFoundPage";
-import { useUserProfileQuery, useUserQuery } from "../services/queries";
-import { Avatar, Box, Typography, Button, CircularProgress } from "@mui/material";
+import { usePublicPostListQuery, useUserProfileQuery, useUserQuery } from "../services/queries";
+import { Avatar, Box, Typography, Button, CircularProgress, Grid } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useAuth } from "../providers/AuthProvider";
 
+import ProfilePostCard from "../components/ProfilePostCard";
+
 export default function UserProfilePage() {
+  const location = useLocation();
+  const currentUrl = `${location.pathname}${location.search}`;
+
   const params = useParams();
   const username = params["username"];
 
   const { data, isLoading, error } = useUserProfileQuery({
     username: username,
   });
+  const {
+    data: postsData,
+    isLoading: isLoadingPosts,
+    error: postsError,
+  } = usePublicPostListQuery({ username });
 
   const { isAuthenticated } = useAuth();
   const { data: userData, isLoading: isUserLoading } = useUserQuery({
@@ -42,7 +52,11 @@ export default function UserProfilePage() {
             مشکلی در بارگذاری صفحه رخ داد، لطفا صفحه را رفرش کنید
           </Typography>
         ) : null}
-        {isCentered && (isLoading || isUserLoading) ? <Typography><CircularProgress /></Typography> : null}
+        {isCentered && (isLoading || isUserLoading) ? (
+          <Typography>
+            <CircularProgress />
+          </Typography>
+        ) : null}
 
         {!isCentered && (
           <>
@@ -83,18 +97,46 @@ export default function UserProfilePage() {
                 </Button>
               )}
             </Box>
-            <Box
+            <Grid
+              container
+              spacing={3}
+              justifyContent="center"
               sx={(theme) => ({
                 mx: 1,
+                py: 4,
                 borderTop: `.5px solid ${grey[300]}`,
                 flex: 1,
+                textAlign: isLoadingPosts || postsError ? "center" : "inherit",
               })}
             >
-              <Typography textAlign="center" fontWeight="600" my={6}>
-                {data.name} هنوز پستی در صفر و یک ننوشته است. پس از انتشار اولین پست, آن را در اینجا
-                نمایش میدهیم.
-              </Typography>
-            </Box>
+              {isLoadingPosts && <CircularProgress sx={{ mt: 5 }} />}
+              {postsError && (
+                <Typography sx={{ mt: 5 }} color="error">
+                  مشکلی در هنگام بارگذاری پست ها پیش آمد.
+                </Typography>
+              )}
+
+              {!isLoadingPosts && !postsError && postsData?.length === 0 && (
+                <Typography textAlign="center" fontWeight="600" my={6}>
+                  {data.name} هنوز پستی در صفر و یک ننوشته است. پس از انتشار اولین پست, آن را در
+                  اینجا نمایش میدهیم.
+                </Typography>
+              )}
+              {!isLoadingPosts &&
+                !postsError &&
+                postsData?.length !== 0 &&
+                postsData.map((post, i) => (
+                  <Grid size={9}>
+                    <ProfilePostCard
+                      component={Link}
+                      to={`/u/${post.author.username}/posts/${post.slug}`}
+                      state={{ from: currentUrl }}
+                      style={{ textDecoration: "none" }}
+                      {...post}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
           </>
         )}
       </Box>
