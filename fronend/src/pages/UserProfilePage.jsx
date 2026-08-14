@@ -126,7 +126,7 @@ export default function UserProfilePage() {
                 !postsError &&
                 postsData?.length !== 0 &&
                 postsData.map((post, i) => (
-                  <Grid size={9}>
+                  <Grid key={i} size={9}>
                     <ProfilePostCard
                       component={Link}
                       to={`/u/${post.author.username}/posts/${post.slug}`}
