@@ -17,6 +17,6 @@ app_name = "accounts-api"
 urlpatterns = [
     path("auth/", include(auth_urlpatterns)),
     path('u/<str:username>/', views.PublicProfileView.as_view(), name='public-profile'),
-    path('u/<str:username>/follow/', views.FollowUserView.as_view(), name='follow-user')
-
+    path('u/<str:username>/follow/', views.FollowUserView.as_view(), name='follow-user'),
+    path('u/<str:username>/unfollow/', views.UnfollowUserView.as_view(), name='unfollow-user')
 ]

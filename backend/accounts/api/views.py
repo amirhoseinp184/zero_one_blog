@@ -372,3 +372,30 @@ class FollowUserView(GenericAPIView):
             request.user.follow(user)
 
         return Response({}, status=status.HTTP_200_OK)
+
+
+class UnfollowUserView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        username = kwargs.get('username')
+        user = get_object_or_404(User, username=username)
+
+        if request.user == user:
+            return Response(
+                {"detail": "You cannot unfollow yourself."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if not request.user.is_following(user):
+            return Response(
+                {"detail": "You are not following this user."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        request.user.unfollow(user)
+
+        return Response(
+            {"detail": f"You have unfollowed {user.username}."},
+            status=status.HTTP_200_OK
+        )
