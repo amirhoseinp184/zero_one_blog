@@ -1,11 +1,18 @@
-Django==5.2.8
-django-cors-headers==4.9.0
-django-phonenumber-field==8.3.0
-djangorestframework==3.16.1
-djangorestframework-simplejwt
-drf-standardized-errors==0.15.0
-freezegun==1.5.5
-phonenumberslite==9.0.18
-Pillow==12.0.0
-PyJWT==2.10.1
-python-dateutil==2.9.0.post0
+Package                       Version
+----------------------------- -----------
+asgiref                       3.11.1
+Django                        5.2.8
+django-cors-headers           4.9.0
+django-environ                0.14.0
+django-phonenumber-field      8.3.0
+djangorestframework           3.16.1
+djangorestframework_simplejwt 5.5.1
+drf-standardized-errors       0.15.0
+freezegun                     1.5.5
+phonenumberslite              9.0.18
+pillow                        12.0.0
+pip                           24.0
+PyJWT                         2.10.1
+python-dateutil               2.9.0.post0
+six                           1.17.0
+sqlparse                      0.5.5
