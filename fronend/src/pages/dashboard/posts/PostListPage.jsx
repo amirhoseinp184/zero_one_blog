@@ -51,7 +51,6 @@ export default function DashboardPostsPage() {
               to={`/dashboard/posts/${slug}`}
               state={{ from: currentUrl }}
               style={{textDecoration:'none', color:'inherit'}}
-
               key={slug}
               title={title}
               status={status}

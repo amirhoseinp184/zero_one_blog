@@ -21,6 +21,7 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
+import PostDetailPage from "./pages/PostDetailPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 // dashboard pages
@@ -60,6 +61,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="/" element={<HomeLayout />}>
                   <Route index element={<HomePage />} />
                   <Route path="u/:username" element={<UserProfilePage />} />
+                  <Route path="u/:username/posts/:postSlug/" element={<PostDetailPage />} />
 
                   <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route

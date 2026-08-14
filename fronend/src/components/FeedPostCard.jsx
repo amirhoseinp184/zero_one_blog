@@ -12,9 +12,10 @@ export default function FeedPostCard(props) {
     reading_time_minutes = 5,
     published_at,
     excerpt,
+    author,
     ...rest
   } = props;
-
+  
   return (
     <Component {...rest}>
       <Card

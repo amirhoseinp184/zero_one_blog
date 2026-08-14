@@ -61,3 +61,14 @@ export function useFeedQuery(){
     getNextPageParam: (lastPage, pages) => lastPage.next
   })
 }
+
+
+export function usePublicPostDetailQuery({username, postSlug}){
+  return useQuery({
+    queryKey: ['public', username, postSlug],
+    queryFn: async() => {
+      const res = await api.get(`u/${username}/posts/${postSlug}/`)
+      return res.data
+    }
+  })
+}
