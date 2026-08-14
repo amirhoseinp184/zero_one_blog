@@ -89,15 +89,12 @@ Ensure you have the following installed on your system:
    Create a `.env` file in the root of the `backend` directory:
    ```env
    SECRET_KEY=django-insecure-replace-this-with-a-real-secret-key-in-production
-   PORT=8000
    DEBUG=True
-   ALLOWED_HOSTS=localhost,127.0.0.1,[::1]
-   DATABASE_NAME=BASE_DIR / "db.sqlite3"
-   JWT_SECRET=your_super_secret_jwt_key
+   ALLOWED_HOSTS=*
+   DATABASE_NAME="db.sqlite3"
    EMAIL_HOST_USER=your-email@example.com
    EMAIL_HOST_PASSWORD=your-app-specific-password
-   EMAIL_SERVICE_KEY=your_email_otp_provider_key
-   CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+   CORS_ALLOW_ALL_ORIGINS=true
    ```
 
 5. **Create database and make migration**
