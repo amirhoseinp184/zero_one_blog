@@ -102,7 +102,14 @@ Ensure you have the following installed on your system:
    python3 manage.py migrate
    ```
 
-6. **Seeding Sample Data (Optional)**
+6. **Create a superuser**
+   since phone otp sending is not implemented and email otp sending is disabled by default, you need to create a superuser to be able to login
+   ```
+   python3 manage.py createsuperuser
+   ```
+   follow the process and answer the questions to create a superuser
+
+7. **Seeding Sample Data (Optional)**
     If you want to quickly populate your database with dummy users and blog posts for development or UI testing, you can use the provided `script.py` script.
 
     This script will automatically generate:
@@ -114,7 +121,7 @@ Ensure you have the following installed on your system:
     python3 manage.py shell < script.py
     ```
 
-7. **Start the development server:**
+8. **Start the development server:**
    ```bash
    python3 manage.py runserver
    ```
